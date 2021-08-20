@@ -1,0 +1,109 @@
+<!--Filtro para la tabla-->
+<div class="filtro">
+  <div class="form-group row">
+    <div class="col-md-2">
+      <input type="text" class="form-control" name="identificacionFiltro" [(ngModel)]="this.filterData.identificacion" placeholder="Identificación">
+    </div>
+    <div class="col-md-2">
+      <input type="text" class="form-control" name="nombre1Filtro" [(ngModel)]="this.filterData.nombre1" placeholder="Primer Nombre">
+    </div>
+    <div class="col-md-2">
+      <input type="text" class="form-control" name="apellido1Filtro" [(ngModel)]="this.filterData.apellido1" placeholder="Primer Apellido">
+    </div>
+    <div class="col-md-2">
+      <input type="text" class="form-control" name="emailFiltro" [(ngModel)]="this.filterData.email" placeholder="Email">
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary" (click)="filterDataSudent()">Filtrar </button>
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-primary addBtn" (click)="openFormAddStudent()"> Adicionar </button>
+    </div>
+  </div>
+</div>
+
+<!--Tabla Estudiante-->
+<div class="mat-elevation-z8 table-responsive">
+
+  <div class="table-container">
+    <table mat-table [dataSource]="datosEstudiante" class="example-table" matSort matSortActive="created"
+      matSortDisableClear matSortDirection="desc">
+
+      <!-- Numero -->
+      <ng-container matColumnDef="Numero">
+        <th mat-header-cell *matHeaderCellDef>#</th>
+        <td mat-cell *matCellDef="let row"></td>
+      </ng-container>
+
+      <!-- Tipo Identificacion -->
+      <ng-container matColumnDef="TipoIdentificacion">
+        <th mat-header-cell *matHeaderCellDef>Tipo Id.</th>
+        <td mat-cell *matCellDef="let row">{{row.tipoIdentificacion}}</td>
+      </ng-container>
+
+      <!-- Identificacion -->
+      <ng-container matColumnDef="Identificacion">
+        <th mat-header-cell *matHeaderCellDef>Identificación</th>
+        <td mat-cell *matCellDef="let row">{{row.identificacion}}</td>
+      </ng-container>
+
+      <!-- Primer Nombre -->
+      <ng-container matColumnDef="Nombre1">
+        <th mat-header-cell *matHeaderCellDef>Primer Nombre</th>
+        <td mat-cell *matCellDef="let row">{{row.nombre1}}</td>
+      </ng-container>
+
+      <!-- Segundo Nombre -->
+      <ng-container matColumnDef="Nombre2">
+        <th mat-header-cell *matHeaderCellDef>Segundo Nombre</th>
+        <td mat-cell *matCellDef="let row">{{row.nombre2}}</td>
+      </ng-container>
+
+      <!-- Primer Apellido -->
+      <ng-container matColumnDef="Apellido1">
+        <th mat-header-cell *matHeaderCellDef>Primer Apellido</th>
+        <td mat-cell *matCellDef="let row">{{row.apellido1}}</td>
+      </ng-container>
+
+      <!-- Segundo Apellido -->
+      <ng-container matColumnDef="Apellido2">
+        <th mat-header-cell *matHeaderCellDef>Segundo Apellido</th>
+        <td mat-cell *matCellDef="let row">{{row.apellido2}}</td>
+      </ng-container>
+
+      <!-- Email -->
+      <ng-container matColumnDef="Email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let row">{{row.email}}</td>
+      </ng-container>
+
+      <!-- Celular -->
+      <ng-container matColumnDef="Celular">
+        <th mat-header-cell *matHeaderCellDef>Celular</th>
+        <td mat-cell *matCellDef="let row">{{row.celular}}</td>
+      </ng-container>
+
+      <!-- Direccion -->
+      <ng-container matColumnDef="Direccion">
+        <th mat-header-cell *matHeaderCellDef>Direccion</th>
+        <td mat-cell *matCellDef="let row">{{row.direccion}}</td>
+      </ng-container>
+
+      <!-- Ciudad -->
+      <ng-container matColumnDef="Ciudad">
+        <th mat-header-cell *matHeaderCellDef>Ciudad</th>
+        <td mat-cell *matCellDef="let row">{{row.ciudad}}</td>
+      </ng-container>
+
+      <!-- Editar -->
+      <ng-container matColumnDef="Editar">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row"><button class="btn btn-sm btn-primary" (click)="openFormEditStudent(row)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>Editar</button></td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+    </table>
+  </div>
+
+  <mat-paginator [pageSize]="50" [pageSizeOptions]="[5, 10, 25,100]"></mat-paginator>
+</div>

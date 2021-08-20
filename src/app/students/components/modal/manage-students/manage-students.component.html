@@ -1,0 +1,157 @@
+<div class="modal-content">
+  <header class="modal-header">
+    <h1 class="modal-title" *ngIf="this.services.tipoForm == 1">Guardar Estudiantes</h1>
+    <h1 class="modal-title" *ngIf="this.services.tipoForm == 2">Editar Estudiantes</h1>
+
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+      <span aria-hidden="true">×</span>
+    </button>
+  </header>
+  <section class="modal-body">
+    <!--Tab Estudiante-->
+    <mat-tab-group>
+      <mat-tab label="Estudiantes">
+        <form [formGroup]="studentForm" (ngSubmit)="saveEditStudentsData()">
+          <br>
+          <div class="form-group">
+            <div class="col-md-12 row">
+              <div class="col-md-6">
+                <label for="first-name">Tipo Identificación: </label>
+                <select class="form-control" formControlName="tipoIdentificacion" required>
+                  <option>CC</option>
+                  <option>TI</option>
+                  <option>CE</option>
+                </select>
+                <span class="text-danger"
+                  *ngIf="(registerFormControl.tipoIdentificacion.touched || submitted) && registerFormControl.tipoIdentificacion.errors?.required">
+                  Tipo Identificación es requerido
+                </span>
+              </div>
+              <div class="col-md-6">
+                <label for="last-name">Identificación: </label>
+                <input id="last-name" type="text" class="form-control" formControlName="identificacion" required
+                  maxlength="15">
+                <span class="text-danger"
+                  *ngIf="(registerFormControl.identificacion.touched || submitted) && registerFormControl.identificacion.errors?.required">
+                  Identificación es requerido
+                </span>
+              </div>
+            </div>
+
+            <div class="col-md-12 row">
+              <div class="col-md-6">
+                <label for="first-name">Primer Nombre: </label>
+                <input id="last-name" type="text" class="form-control" formControlName="nombre1" required
+                  maxlength="20">
+                <span class="text-danger"
+                  *ngIf="(registerFormControl.nombre1.touched || submitted) && registerFormControl.nombre1.errors?.required">
+                  Primer Nombre es requerido
+                </span>
+              </div>
+              <div class="col-md-6">
+                <label for="last-name">Segundo Nombre: </label>
+                <input id="last-name" type="text" class="form-control" formControlName="nombre2" maxlength="20">
+              </div>
+            </div>
+
+            <div class="col-md-12 row">
+              <div class="col-md-6">
+                <label for="first-name">Primer Apellido: </label>
+                <input id="last-name" type="text" class="form-control" formControlName="apellido1" required
+                  maxlength="20">
+                <span class="text-danger"
+                  *ngIf="(registerFormControl.apellido1.touched || submitted) && registerFormControl.apellido1.errors?.required">
+                  Primer Apellido es requerido
+                </span>
+              </div>
+              <div class="col-md-6">
+                <label for="last-name">Segundo Apellido: </label>
+                <input id="last-name" type="text" class="form-control" formControlName="apellido2" maxlength="20">
+              </div>
+            </div>
+
+            <div class="col-md-12 row">
+              <div class="col-md-6">
+                <label for="first-name">Email: </label>
+                <input id="last-name" type="email" class="form-control" formControlName="email" maxlength="50"
+                  email="true">
+
+                <span class="text-danger"
+                  *ngIf="registerFormControl.email.touched && registerFormControl.email.errors?.email">
+                  Ingrese un email valido
+                </span>
+              </div>
+              <div class="col-md-6">
+                <label for="last-name">Celular: </label>
+                <input id="last-name" type="text" class="form-control" formControlName="celular" maxlength="20">
+              </div>
+            </div>
+
+            <div class="col-md-12 row">
+              <div class="col-md-6">
+                <label for="first-name">Dirección: </label>
+                <input id="last-name" type="text" class="form-control" formControlName="direccion" maxlength="50">
+              </div>
+              <div class="col-md-6">
+                <label for="last-name">Ciudad: </label>
+                <input id="last-name" type="text" class="form-control" formControlName="ciudad" required maxlength="50">
+                <span class="text-danger"
+                *ngIf="(registerFormControl.ciudad.touched || submitted) && registerFormControl.ciudad.errors?.required">
+                Ciudad es requerido
+              </span>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary btnPrincipal">
+            <span *ngIf="this.services.tipoForm == 1"><span class="fa fa-save"></span> Guardar Estudiante</span>
+            <span *ngIf="this.services.tipoForm == 2">Modificar Estudiante</span>
+
+          </button>
+        </form>
+      </mat-tab>
+
+      <!--Tab Curso-->
+      <mat-tab label="Curso" *ngIf="this.services.tipoForm == 2">
+
+        <div class="col-md-12 row">
+          <div class="col-md-6">
+            <label class="courseAvaliable">Cursos Disponibles </label> 
+            <hr>
+            <mat-selection-list [(ngModel)]="selected">
+              <mat-list-option *ngFor="let item of this.services.listCoursesAvailable" [value]="item.id">
+                {{item.nombre}}
+              </mat-list-option>
+            </mat-selection-list>
+            <button class="btn btn-sm btn-primary btnAddCourseStudent" (click)="addCourseStudent()">Agregar</button>
+          </div>
+
+
+          <div class="col-md-6 tableCourse">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Curso</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of this.services.listStudentCourse">
+                  <td>{{item.curso.nombre}}</td>
+                  <td><button class="btn btn-sm btn-primary" (click)="deleteCourseStudent(item)">Eliminar</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </mat-tab>
+    </mat-tab-group>
+  </section>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="closeModal()"> <i class="fa fa-times"></i>
+      Cerrar</button>
+  </div>
+</div>
+
+<div *ngIf="loading" class="loader"></div>
